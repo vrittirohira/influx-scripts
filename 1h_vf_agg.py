@@ -7,12 +7,12 @@ def process_scheduled_call(influxdb3_local, call_time, args=None):
     t0 = time_mod.time()
     agg_results = influxdb3_local.query(
         "SELECT account_id, io_op_type, io_lat_src, instance_size, "
-        "SUM(samples) AS samples, "
+        "AVG(samples) AS samples, "
         "AVG(avg_p50) AS avg_p50, "
         "AVG(avg_p99_9) AS avg_p99_9, "
         "AVG(avg_p100) AS avg_p100, "
-        "SUM(total_ios) AS total_ios, "
-        "SUM(total_bytes) AS total_bytes "
+        "AVG(total_ios) AS total_ios, "
+        "AVG(total_bytes) AS total_bytes "
         "FROM \"15min_vf_agg\" "
         "WHERE time >= now() - INTERVAL '1 hour' "
         "GROUP BY account_id, io_op_type, io_lat_src, instance_size"
